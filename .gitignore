@@ -1,0 +1,14 @@
+OpenConsole.exe
+conpty.dll
+install-context.reg
+install.json
+libEGL.dll
+libGLESv2.dll
+manifest.json
+mesa/
+strip-ansi-escapes.exe
+uninstall-context.reg
+wezterm-gui.exe
+wezterm-mux-server.exe
+wezterm.exe
+wezterm.pdb
