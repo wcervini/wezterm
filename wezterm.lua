@@ -1,96 +1,62 @@
 local w = require("wezterm")
 local c = w.config_builder()
 
-c.window_background_opacity = 0.96
--- appearance
-c.font = w.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
-c.font_size = 16
+-- === Apariencia ===
 c.color_scheme = "Catppuccin Mocha"
+c.font = w.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
+c.font_size = 16.0
 c.colors = {
     background = "#000",
     cursor_bg = "#9B96B5",
     cursor_fg = "#1a1a1e",
     cursor_border = "#ffffff",
 }
-c.window_padding = {
-    left = 30,
-    right = 30,
-    top = 10,
-    bottom = 5
-}
---default_prog = { "cmd.exe", "-NoLogo" }, -- ← PowerShell siempre
-c.default_prog = { "pwsh.exe", "-NoLogo" } -- ← PowerShell siempre
-c.max_fps = 30
-c.animation_fps = 30
-c.front_end = "WebGpu"
-c.prefer_egl = true
-
-
-c.enable_tab_bar = false
-c.window_close_confirmation = "NeverPrompt"
-c.adjust_window_size_when_changing_font_size = true
-c.enable_tab_bar = false
+c.window_background_opacity = 0.96
+c.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 c.window_decorations = "RESIZE"
+c.enable_tab_bar = false
+
+-- === Rendimiento ===
+c.front_end = "WebGpu"
+c.max_fps = 60
+c.animation_fps = 60
+
+-- === Comportamiento ===
+c.default_prog = { "pwsh.exe", "-NoLogo" }
 c.window_close_confirmation = "NeverPrompt"
 c.automatically_reload_config = true
 c.audible_bell = "Disabled"
 c.adjust_window_size_when_changing_font_size = false
 c.harfbuzz_features = { "calt=0" }
 
-c.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
+-- === LEADER KEY ===
+c.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
 
 c.keys = {
-  { 
-    key ="m", 
-    mods ="CMD",
-    action = w.action.DisableDefaultAssignment
-  },
-	{ 
-    key = "d", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.SplitHorizontal({domain = "CurrentPaneDomain"}) 
-  },
-  { 
-    key = "D", 
-    mods = "CTRL|SHIFT",
-    action = w.action.SplitVertical({ domain = "CurrentPaneDomain" }) 
-  },
-  {
-    key = "w", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.CloseCurrentPane({ confirm = true }) 
-  },
-  { 
-    key = "t", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.SpawnTab("CurrentPaneDomain") 
-  },
-  {
-    key = "b", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.RotatePanes("CounterClockwise") 
-  },
-  { 
-    key = "n", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.RotatePanes("Clockwise") 
-  },
-  {
-    key = "h", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.ActivatePaneDirection("Left") 
-  },
-  { 
-    key = "j", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.ActivatePaneDirection("Down") },
-  { 
-    key = "k", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.ActivatePaneDirection("Up") },
-  { 
-    key = "l", 
-    mods = "CTRL|SHIFT", 
-    action = w.action.ActivatePaneDirection("Right") },
-  }
+    { key = "m", mods = "CTRL|ALT", action = w.action.DisableDefaultAssignment },
+    
+    -- Paneles (Splits)
+    { key = "r", mods = "LEADER", action = w.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+    { key = "v", mods = "LEADER", action = w.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+    { key = "w", mods = "LEADER", action = w.action.CloseCurrentPane({ confirm = false }) },
+    
+    -- Navegación (HJKL)
+    { key = "h", mods = "LEADER", action = w.action.ActivatePaneDirection("Left") },
+    { key = "j", mods = "LEADER", action = w.action.ActivatePaneDirection("Down") },
+    { key = "k", mods = "LEADER", action = w.action.ActivatePaneDirection("Up") },
+    { key = "l", mods = "LEADER", action = w.action.ActivatePaneDirection("Right") },
+
+    -- REDIMENSIONAR (Leader + Flechas)
+    { key = "LeftArrow",  mods = "LEADER", action = w.action.AdjustPaneSize({ "Left", 5 }) },
+    { key = "RightArrow", mods = "LEADER", action = w.action.AdjustPaneSize({ "Right", 5 }) },
+    { key = "UpArrow",    mods = "LEADER", action = w.action.AdjustPaneSize({ "Up", 5 }) },
+    { key = "DownArrow",  mods = "LEADER", action = w.action.AdjustPaneSize({ "Down", 5 }) },
+}
+
+-- EVENTO PARA MAXIMIZAR AL INICIAR
+w.on("gui-startup", function()
+    local _, _, window = w.mux.spawn_window({})
+    window:gui_window():maximize()
+end)
+
 return c
