@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\shell\wezterm]
+@="Abrir WezTerm aquí"
+"Icon"="D:\\scoop\\apps\\WezTerm\\current\\wezterm.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\wezterm\command]
+@="\"D:\\scoop\\apps\\WezTerm\\current\\wezterm.exe" start --cwd \"%V\""

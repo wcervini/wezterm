@@ -4,7 +4,7 @@ local c = w.config_builder()
 -- === Apariencia ===
 c.color_scheme = "Catppuccin Mocha"
 c.font = w.font("JetBrainsMono Nerd Font Mono", { weight = "Regular" })
-c.font_size = 12.0
+c.font_size = 14.0
 c.colors = {
 	background = "#000",
 	cursor_bg = "#9B96B5",
@@ -42,9 +42,8 @@ c.keys = {
 	{ key = "Tab", mods = "CTRL|SHIFT", action = w.action.ActivateTabRelative(-1) },
 
 	--{ key = "F9", mods = "CTRL", action = w.action.PaneSelect({}) },
-	
 
-  	{ key = "r", mods = "LEADER", action = w.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "r", mods = "LEADER", action = w.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "v", mods = "LEADER", action = w.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
 	{ key = "w", mods = "LEADER", action = w.action.CloseCurrentPane({ confirm = false }) },
 
@@ -63,9 +62,6 @@ c.keys = {
 	-- INTERCAMBIAR PANELES
 	{ key = "x", mods = "LEADER", action = w.action.PaneSelect({ mode = "SwapWithActive" }) },
 	{ key = "X", mods = "LEADER", action = w.action.RotatePanes("Clockwise") },
-
-
-
 }
 
 -- EVENTO PARA MAXIMIZAR AL INICIAR
